@@ -30,7 +30,8 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
   /**************************************************************************** */
 
   app.get('/filteredImage', async (request: Request, response: Response) =>{
-    const  image_url  = request.query.image_url;
+    
+    const image_url:string = request.query.image_url.toString();
 
     //Validating image_url query
     try{
@@ -42,7 +43,7 @@ import {filterImageFromURL, deleteLocalFiles} from './util/util';
         console.log(err);
       })
   
-      const filteredImage = await filterImageFromURL(image_url);
+      const filteredImage:string = await (await filterImageFromURL(image_url)).toString();
   
       response.status(200).sendFile(filteredImage, () =>{
         deleteLocalFiles([filteredImage])
